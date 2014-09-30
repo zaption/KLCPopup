@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 #import "KLCPopup.h"
 
@@ -978,7 +979,9 @@ const KLCPopupLayout KLCPopupLayoutCenter = { KLCPopupHorizontalLayoutCenter, KL
 
 
 - (void)updateForInterfaceOrientation {
-  
+  // iOS 8+ handles interface rotations for us, so this method is not needed
+  if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) return;
+
   UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
   CGFloat angle;
   
